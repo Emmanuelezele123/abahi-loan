@@ -1,5 +1,7 @@
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
+require("dotenv").config()
+const expiryDate = process.env.COOKIE_EXPIRY_DATE
 const { createToken } = require('../services/jwtService')
 
 exports.registerNewUser = (req, res) => {
@@ -72,6 +74,8 @@ exports.loginUser = (req, res) => {
         if (!token) {
             return res.status(500).json({message: "sorry, we could not authenticate you, please login"})
         }
+        //set token to cookie
+        res.cookie('jwt',token,{httpOnly:true, maxAge:expiryDate});
         // send token to user
         return res.status(200).json({
             message: "user logged in",
@@ -79,4 +83,11 @@ exports.loginUser = (req, res) => {
         })
         
     }) 
+}
+
+exports.logOut = (req,res) => {
+    res.clearCookie('jwt');
+    return res.status(200).json({
+        message: "User has been successful logged out "
+})
 }

@@ -4,7 +4,16 @@ const Loan = require("../models/loans")
 
 const createLoan = (req, res) => {
     const loan = req.body;
-    const newLoan = new Loan({ userId: loan.userId, type: loan.type, amountAvaliable: loan.amountAvaliable, status: loan.status });
+    const newLoan = new Loan({  userId: loan.userId, 
+        type: loan.type, 
+        loanAmount: loan.loanAmount, 
+        issueDate: loan.issueDate, 
+        expiryDate: loan.expiryDate, 
+        status: loan.status,
+        guarantor_name: loan.guarantor_name, 
+        guarantor_occupation: loan.guarantor_occupation, 
+        guarantor_address: loan.guarantor_address, 
+        guarantor_phoneNumber: loan.guarantor_phoneNumber });
     newLoan.save((err, result) => {
         if (err) {
             console.log(err.message)
@@ -72,23 +81,60 @@ const updateLoan = (req, res) => {
     const loanId = req.params.id
     const loan = req.body
     Loan.updateOne({ _id: loanId }, {
-        userId: loan.userId, type: loan.type, amountAvaliable: loan.amountAvaliable, status: loan.status
+        userId: loan.userId, 
+        type: loan.type, 
+        loanAmount: loan.loanAmount, 
+        issueDate: loan.issueDate, 
+        expiryDate: loan.expiryDate, 
+        status: loan.status,
+        guarantor_name: loan.guarantor_name, 
+        guarantor_occupation: loan.guarantor_occupation, 
+        guarantor_address: loan.guarantor_address, 
+        guarantor_phoneNumber: loan.guarantor_phoneNumber,
     }, function (err, affected, resp) {
         if (err) {
             console.log(err.message)
             console.error(err)
             res.json({ Error: err.message })
         } else {
-            return res.json({ status:"Success",message: "Customer updated with id "+loanId })
+            return res.json({ status:"Success",message: "Loan updated with id "+loanId })
 
        
         }
     })
 }
 
+const approveLoan = (req, res) => {
+    const loanId = req.params.id
+    const loan = req.body
+
+           
+      
+    Loan.updateOne({ _id: loanId }, {
+        $set: {
+       
+        issueDate: loan.issueDate, 
+        expiryDate: loan.expiryDate, 
+        status: loan.status,
+       
+    }}, function (err, affected, resp) {
+        if (err) {
+            console.log(err.message)
+            console.error(err)
+            res.json({ Error: err.message })
+        } else {
+            return res.json({ status:"Success",message: "Loan approved with id "+loanId })
+
+       
+        }
+    })
+}
+
+
 module.exports = {
     createLoan,
     deleteLoan,
+    approveLoan,
     getAllLoans,
     getLoan,
     updateLoan

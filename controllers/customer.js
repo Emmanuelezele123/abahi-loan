@@ -3,7 +3,22 @@ const Customer = require('../models/customer')
 
 const createCustomer = (req, res) => {
     const customer = req.body;
-    const newCustomer = new Customer({ name: customer.name, email: customer.email, phoneNumber: customer.phoneNumber });
+    const newCustomer = new Customer({ 
+        firstname: customer.firstname,
+        lastname: customer.lastname, 
+        middlename: customer.middlename ,
+        address: customer.address  , 
+        dob: customer.dob ,
+        gender: customer.gender ,
+        nationality: customer.nationality
+        ,lga: customer.lga
+        ,stateOfOrigin: customer.stateOfOrigin,
+        businessName: customer.businessName ,
+        businessAddress: customer.businessAddress
+        ,department: customer.department
+        ,position: customer.position
+        , email: customer.email, 
+        phoneNumber: customer.phoneNumber });
     newCustomer.save((err, result) => {
         if (err) {
             console.log(err.message)
@@ -69,7 +84,21 @@ const updateCustomer = (req, res) => {
     const customerId = req.params.id
     const customer = req.body
     User.updateOne({ _id: userId }, {
-        name: customer.name, email: customer.email, phoneNumber: customer.phoneNumber
+        firstname: customer.firstname,
+        lastname: customer.lastname, 
+        middlename: customer.middlename ,
+        address: customer.address  , 
+        dob: customer.dob ,
+        gender: customer.gender ,
+        nationality: customer.nationality
+        ,lga: customer.lga
+        ,stateOfOrigin: customer.stateOfOrigin,
+        businessName: customer.businessName ,
+        businessAddress: customer.businessAddress
+        ,department: customer.department
+        ,position: customer.position
+        , email: customer.email, 
+        phoneNumber: customer.phoneNumber
     }, function (err, affected, resp) {
         if (err) {
             console.log(err.message)
@@ -81,6 +110,7 @@ const updateCustomer = (req, res) => {
         }
     })
 }
+
 
 module.exports = {
     createCustomer,

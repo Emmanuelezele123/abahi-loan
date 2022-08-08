@@ -1,29 +1,53 @@
 const mongoose = require("mongoose")
-const {Schema} = mongoose
+const { Schema } = mongoose
 
 const LoanSchema = new Schema(
-    {
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required:true
-       },
-     type: {
-        type: String,
-        required:true,
-        enum:["Individual","Group"]
+  {
+    userId: {
+      type: [mongoose.Schema.Types.ObjectId],
+      required: true
     },
-    amountAvaliable:{
-        type:Number,
-        required:true,
+    type: {
+      type: String,
+      required: true,
+      enum: ["Individual", "Group"],
+      default: "Group"
     },
-    status:{
-        type:String,
-        enum: ['Avaliable', 'Pending'],
-        required:true
-        
-    }
-   },
-     { timestamps: true }
-    );
+    loanAmount: {
+      type: Number,
+      required: true,
+    },
+    issueDate: {
+      type: Date,
+      required: true,
+    },
+    expiryDate: {
+      type: Date,
+      required: true,
+    },
 
-    module.exports = mongoose.model('Loan', LoanSchema);
+    status: {
+      type: String,
+      enum: ['Avaliable', 'Pending'],
+      required: true
+      
+
+    }, guarantor_name: {
+      type: String,
+      required: true,
+    }, guarantor_occupation: {
+      type: String,
+      required: true,
+    }, guarantor_address: {
+      type: String,
+      required: true,
+    }
+    ,guarantor_phoneNumber: {
+      type:String,
+      required:true,
+   }
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('Loan', LoanSchema);

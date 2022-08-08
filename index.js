@@ -17,7 +17,5 @@ app.use(errorHandler)
 app.use("/auth",authRouter)
 app.use("/customer",customerRouter)
 app.use("/loan",loanRouter)
-//MONGO_URI="mongodb+srv://Ezele:twF3tc7S9QEq5JgK@nodeexpressprojecct.kqdeu.mongodb.net/?retryWrites=true&w=majority"
-
 console.log(seedAdmin());
 connectDB(app,port)
