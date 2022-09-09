@@ -18,11 +18,15 @@ exports.createToken = (user) => {
     }
 }
 
+
+
+
+
 exports.decodeToken = (token) => {
     try {
         let decodedToken = jwt.verify(token, secret)
         return decodedToken
-    } catch(error) {
+    } catch(error) { 
         console.log(error)
         return null
     }
